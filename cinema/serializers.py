@@ -125,7 +125,10 @@ class MovieSessionDetailSerializer(MovieSessionSerializer):
 
     @staticmethod
     def get_taken_seats(obj):
-        return [{"row": ticket.row, "seat": ticket.seat} for ticket in obj.tickets.all()]
+        return [{
+            "row": ticket.row,
+            "seat": ticket.seat
+        } for ticket in obj.tickets.all()]
 
     class Meta:
         model = MovieSession
@@ -147,7 +150,11 @@ class TicketSerializer(serializers.ModelSerializer):
         fields = ("id", "row", "seat", "movie_session")
         validators = [
             UniqueTogetherValidator(
-                queryset=Ticket.objects.all(), fields=["row", "seat", "movie_session"]
+                queryset=Ticket.objects.all(), fields=[
+                    "row",
+                    "seat",
+                    "movie_session"
+                ]
             )
         ]
 
