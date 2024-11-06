@@ -2,7 +2,15 @@ from django.db import transaction
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 
-from cinema.models import Genre, Actor, CinemaHall, Movie, MovieSession, Ticket, Order
+from cinema.models import (
+    Genre,
+    Actor,
+    CinemaHall,
+    Movie,
+    MovieSession,
+    Ticket,
+    Order
+)
 
 
 class GenreSerializer(serializers.ModelSerializer):
@@ -20,13 +28,26 @@ class ActorSerializer(serializers.ModelSerializer):
 class CinemaHallSerializer(serializers.ModelSerializer):
     class Meta:
         model = CinemaHall
-        fields = ("id", "name", "rows", "seats_in_row", "capacity")
+        fields = (
+            "id",
+            "name",
+            "rows",
+            "seats_in_row",
+            "capacity"
+        )
 
 
 class MovieSerializer(serializers.ModelSerializer):
     class Meta:
         model = Movie
-        fields = ("id", "title", "description", "duration", "genres", "actors")
+        fields = (
+            "id",
+            "title",
+            "description",
+            "duration",
+            "genres",
+            "actors"
+        )
 
 
 class MovieListSerializer(MovieSerializer):
@@ -44,7 +65,14 @@ class MovieDetailSerializer(MovieSerializer):
 
     class Meta:
         model = Movie
-        fields = ("id", "title", "description", "duration", "genres", "actors")
+        fields = (
+            "id",
+            "title",
+            "description",
+            "duration",
+            "genres",
+            "actors"
+        )
 
 
 class MovieSessionSerializer(serializers.ModelSerializer):
@@ -52,7 +80,13 @@ class MovieSessionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = MovieSession
-        fields = ("id", "show_time", "movie", "cinema_hall", "tickets_available")
+        fields = (
+            "id",
+            "show_time",
+            "movie",
+            "cinema_hall",
+            "tickets_available"
+        )
 
     @staticmethod
     def get_tickets_available(obj):
@@ -62,7 +96,10 @@ class MovieSessionSerializer(serializers.ModelSerializer):
 
 
 class MovieSessionListSerializer(MovieSessionSerializer):
-    movie_title = serializers.CharField(source="movie.title", read_only=True)
+    movie_title = serializers.CharField(
+        source="movie.title",
+        read_only=True
+    )
     cinema_hall_name = serializers.CharField(
         source="cinema_hall.name", read_only=True
     )
@@ -92,7 +129,14 @@ class MovieSessionDetailSerializer(MovieSessionSerializer):
 
     class Meta:
         model = MovieSession
-        fields = ("id", "show_time", "movie", "cinema_hall", "taken_seats", "tickets_available")
+        fields = (
+            "id",
+            "show_time",
+            "movie",
+            "cinema_hall",
+            "taken_seats",
+            "tickets_available"
+        )
 
 
 class TicketSerializer(serializers.ModelSerializer):
