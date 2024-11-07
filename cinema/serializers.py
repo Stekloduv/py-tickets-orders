@@ -115,16 +115,17 @@ class MovieSessionListSerializer(MovieSessionSerializer):
             "movie_title",
             "cinema_hall_name",
             "cinema_hall_capacity",
+            "tickets_available"
         )
 
 
 class MovieSessionDetailSerializer(MovieSessionSerializer):
     movie = MovieListSerializer(many=False, read_only=True)
     cinema_hall = CinemaHallSerializer(many=False, read_only=True)
-    taken_seats = serializers.SerializerMethodField()
+    taken_places = serializers.SerializerMethodField()
 
     @staticmethod
-    def get_taken_seats(obj):
+    def get_taken_places(obj):
         return [{
             "row": ticket.row,
             "seat": ticket.seat
@@ -137,7 +138,7 @@ class MovieSessionDetailSerializer(MovieSessionSerializer):
             "show_time",
             "movie",
             "cinema_hall",
-            "taken_seats",
+            "taken_places",
             "tickets_available"
         )
 
